@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  
+  - let results = [{elephant_name: 'African Bush Elephant', elephant_population: '415,000', elephant_avg_weight: '9,900 - 13,500 lbs'}, {elephant_name: 'Asian Elephant', elephant_population: '50,000', elephant_avg_weight: '7,700 - 11,500 lbs'}, {elephant_name: 'Indian Elephant', elephant_population: '25,000', elephant_avg_weight: '4,400 - 11,000 lbs'}]
+  - console.log(results)
+
+  each item in results
+    div.container-fluid
+      div.row
+        div.col-sm-2 #{item.elephant_name}
+        div.col-sm-2 #{item.elephant_population}
+        div.col-sm-2 #{item.elephant_avg_weight}

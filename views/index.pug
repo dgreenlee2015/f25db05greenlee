@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  p Dustin Greenlee's page
+
+  button(type="button", class="btn btn-primary" onClick="faster()") Sample Button
+
+  div(id="faster") add in extra
+
+  script. 
+    let value = 1
+    let amt = 2
+    let answer = document.getElementById("faster")
+
+    function faster()
+    {
+      amt = amt * 2
+      value = amt + value
+      console.log("Faster " + value + " times " + amt)
+      answer.innerHTML = "Faster " + value + " times " + amt
+    }

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+
+  p rows = #{query.rows} and cols = #{query.cols}
+
+  - let rows = Number(query.rows)
+  - let cols = Number(query.cols)
+  if !Number.isInteger(rows) || !Number.isInteger(cols)
+    p Either rows or cols is not an integer
+  else if rows < 3 || rows > 13
+    p rows is not in range
+  else if cols < 3 || cols > 13
+    p cols is not in range
+  else
+    table#outer
+      - for(let i=0; i<rows; i++) {
+        tr#middle
+          - for(let j=0; j<cols; j++) {
+            td= i + (2*j)
+          - }
+      - }
