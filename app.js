@@ -9,6 +9,9 @@ var usersRouter = require('./routes/users');
 var elephantRouter = require('./routes/elephant');
 var gridRouter = require('./routes/grid');
 var randomRouter = require('./routes/pick');
+var resourceRouter = require('./routes/resource')
+
+var Elephant = require("./models/elephant");
 
 var app = express();
 
@@ -22,11 +25,56 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
+// Get the default connection
+var db = mongoose.connection;
+// Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+  console.log("Connection to DB succeeded")});
+
+async function recreateDB()
+{
+  // Delete everything
+  await Elephant.deleteMany();
+
+  let elephant1 = new Elephant({elephant_name:"African Bush Elephant", elephant_population:"415,000", elephant_avg_weight:"9,900 - 13,500 lbs"});
+  elephant1.save().then(doc=>{
+    console.log("First object saved")
+  }).catch(err=>{
+      console.error(err)
+    });
+  
+  let elephant2 = new Elephant({elephant_name:"Asian Elephant", elephant_population:"50,000", elephant_avg_weight:"7,700 - 11,500 lbs"});
+  elephant2.save().then(doc=>{
+    console.log("Second object saved")
+  }).catch(err=>{
+      console.error(err)
+    });
+  
+  let elephant3 = new Elephant({elephant_name:"Indian Elephant", elephant_population:"25,000", elephant_avg_weight:"4,400 - 11,000 lbs"});
+  elephant3.save().then(doc=>{
+    console.log("Third object saved")
+  }).catch(err=>{
+      console.error(err)
+    });
+}
+let reseed = true;
+if (reseed)
+{
+  recreateDB();
+}
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/elephant', elephantRouter);
 app.use('/grid', gridRouter);
 app.use('/randomitem', randomRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
