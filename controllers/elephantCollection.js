@@ -19,8 +19,22 @@ exports.elephant_detail = function(req, res) {
 res.send('NOT IMPLEMENTED: Elephant detail: ' + req.params.id);
 };
 // Handle Costume create on POST.
-exports.elephant_create_post = function(req, res) {
-res.send('NOT IMPLEMENTED: Elephant create POST');
+exports.elephant_create_post = async function(req, res) {
+    console.log(req.body)
+    let document = new Elephant();
+    document.elephant_name = req.body.elephant_name;
+    document.elephant_population = req.body.elephant_population;
+    document.elephant_avg_weight = req.body.elephant_avg_weight;
+    try
+    {
+        let result = await document.save();
+        res.send(result);
+    }
+    catch(err)
+    {
+        res.status(500);
+        res.send(`{"error":${err}}`);
+    }
 };
 // Handle Costume delete from on DELETE.
 exports.elephant_delete = function(req, res) {
