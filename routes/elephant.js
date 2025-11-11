@@ -1,9 +1,8 @@
 var express = require('express');
+const elephant_controller = require('../controllers/elephantCollection');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('elephant', { title: 'Search Results elephant' });
-});
+/* GET elephants. */
+router.get('/', elephant_controller.elephant_View_all_Page);
 
 module.exports = router;

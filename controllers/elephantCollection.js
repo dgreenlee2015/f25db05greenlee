@@ -30,3 +30,19 @@ res.send('NOT IMPLEMENTED: Elephant delete DELETE ' + req.params.id);
 exports.elephant_update_put = function(req, res) {
 res.send('NOT IMPLEMENTED: Elephant update PUT' + req.params.id);
 };
+
+// VIEWS
+// Handle a show all view
+exports.elephant_View_all_Page = async function(req, res)
+{
+    try
+    {
+        theElephants = await Elephant.find();
+        res.render('elephant', {title: 'Elephant Search Results', results: theElephants});
+    }
+    catch(err)
+    {
+        res.status(500);
+        res.send(`{"error":${err}}`);
+    }
+};
