@@ -18,7 +18,7 @@ exports.elephant_list = async function(req, res)
 // for a specific Elephant.
 exports.elephant_detail = async function(req, res)
 {
-    console.log("detail" + req.params.id)
+    console.log("detail " + req.params.id)
     try
     {
         result = await Elephant.findById(req.params.id)
@@ -52,8 +52,20 @@ exports.elephant_create_post = async function(req, res)
 };
 
 // Handle Elephant delete from on DELETE.
-exports.elephant_delete = function(req, res) {
-res.send('NOT IMPLEMENTED: Elephant delete DELETE ' + req.params.id);
+exports.elephant_delete = async function(req, res)
+{
+    console.log("delete " + req.params.id)
+    try
+    {
+        result = await Elephant.findByIdAndDelete(req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    }
+    catch(err)
+    {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
 };
 
 // Handle Elephant update form on PUT.
