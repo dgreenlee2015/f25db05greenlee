@@ -15,7 +15,7 @@ exports.elephant_list = async function(req, res)
     }
 };
 
-// for a specific Costume.
+// for a specific Elephant.
 exports.elephant_detail = async function(req, res)
 {
     console.log("detail" + req.params.id)
@@ -31,7 +31,7 @@ exports.elephant_detail = async function(req, res)
     }
 };
 
-// Handle Costume create on POST.
+// Handle Elephant create on POST.
 exports.elephant_create_post = async function(req, res)
 {
     console.log(req.body)
@@ -51,14 +51,36 @@ exports.elephant_create_post = async function(req, res)
     }
 };
 
-// Handle Costume delete from on DELETE.
+// Handle Elephant delete from on DELETE.
 exports.elephant_delete = function(req, res) {
 res.send('NOT IMPLEMENTED: Elephant delete DELETE ' + req.params.id);
 };
 
-// Handle Costume update form on PUT.
-exports.elephant_update_put = function(req, res) {
-res.send('NOT IMPLEMENTED: Elephant update PUT' + req.params.id);
+// Handle Elephant update form on PUT.
+exports.elephant_update_put = async function(req, res)
+{
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+    try
+    {
+        let toUpdate = await Elephant.findById(req.params.id)
+
+        // Do updates of properties
+        if(req.body.elephant_name)
+            toUpdate.elephant_name = req.body.elephant_name;
+        if(req.body.elephant_population)
+            toUpdate.elephant_population = req.body.elephant_population;
+        if(req.body.elephant_avg_weight)
+            toUpdate.elephant_avg_weight = req.body.elephant_avg_weight;
+
+        let result = await toUpdate.save();
+        console.log("success" + result)
+        res.send(result)
+    }
+    catch(err)
+    {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed}`);
+    }
 };
 
 // VIEWS
