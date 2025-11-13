@@ -1,0 +1,41 @@
+extends layout 
+
+block content 
+    h1= title 
+
+    - let elephantid = toShow._id 
+    - let elephant_name = toShow.elephant_name
+    - let elephant_population = toShow.elephant_population 
+    - let elephant_avg_weight = toShow.elephant_avg_weight 
+
+    div
+        div.row(class='mb-2')
+            div.mr-1 ID is:
+            div #{elephantid}
+        - let actionid = "/resource/elephant/" + elephantid
+
+    form(id='ElephantForm', action=actionid, method="PUT")
+        div.form-group
+            label.elephant_Attr(for='elephant_name') Elephant Name 
+            input#elephant_name(type='text', name='elephant_name', value=elephant_name)
+        div.form-group
+            label.elephant_Attr(for='elephant_population') Elephant Population 
+            input#elephant_population(type='text', name='elephant_population', value=elephant_population)
+        div.form-group
+            label.elephant_Attr(for='elephant_avg_weight') Elephant Avg Weight 
+            input#elephant_avg_weight(type='text', name='elephant_avg_weight', value=elephant_avg_weight)
+        input(type="submit")
+
+    script. 
+        document.forms['ElephantForm'].addEventListener('submit', (event)=> {
+            event.preventDefault();
+            fetch(event.target.action, {
+                method: 'PUT', body: new URLSearchParams(new FormData(event.target))
+            }).then((resp) => {
+                return resp.json();
+            }).then((body) => {
+                alert("Save Succeeded")
+            }).catch((error) => {
+                alert("Save failed " + error)
+            });
+        });

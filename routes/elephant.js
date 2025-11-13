@@ -11,4 +11,7 @@ router.get('/detail', elephant_controller.elephant_view_one_Page);
 /* Get create elephant page */
 router.get('/create', elephant_controller.elephant_create_Page);
 
+/* Get create update page */
+router.get('/update', elephant_controller.elephant_update_Page);
+
 module.exports = router;
