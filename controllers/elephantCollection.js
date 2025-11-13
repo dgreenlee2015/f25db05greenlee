@@ -157,3 +157,19 @@ exports.elephant_update_Page = async function(req, res)
         res.send(`{'error":${err}}`);
     }
 };
+
+// Handle a delete one view with id from query
+exports.elephant_delete_Page = async function(req, res)
+{
+    console.log("Delete view for id " + req.query.id)
+    try
+    {
+        result = await Elephant.findById(req.query.id)
+        res.render('elephantdelete', {title: 'Elephant Delete', toShow: result});
+    }
+    catch(err)
+    {
+        res.status(500)
+        res.send(`{'error': ${err}`);
+    }
+};

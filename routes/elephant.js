@@ -14,4 +14,7 @@ router.get('/create', elephant_controller.elephant_create_Page);
 /* Get create update page */
 router.get('/update', elephant_controller.elephant_update_Page);
 
+/* Get delete elephant page */
+router.get('/delete', elephant_controller.elephant_delete_Page);
+
 module.exports = router;

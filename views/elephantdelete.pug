@@ -1,0 +1,53 @@
+extends layout
+
+block content
+    h1= title 
+
+    if(toShow == null)
+        h2 No instance to delete
+    else
+        - let elephantid = toShow._id 
+        - let elephant_name = toShow.elephant_name
+        - let elephant_population = toShow.elephant_population 
+        - let elephant_avg_weight = toShow.elephant_avg_weight
+        - let actionid = "/resource/elephant/" + elephantid
+        script let actionid = "#{actionid}"
+
+        div
+            div.row 
+                div(class='elephantAttr mr-3') Elephant ID is:
+                div #{elephantid}
+            div.row 
+                div(class='elephantAttr mr-3') Elephant Name is:
+                div #{elephant_name}
+            div.row 
+                div(class='elephantAttr mr-3') Elephant Population is:
+                div #{elephant_population}
+            div.row 
+                div(class='elephantAttr mr-3') Elephant Avg Weight is:
+                div #{elephant_avg_weight}
+        
+        button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+        button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+    
+    script.
+        function cancel()
+        {
+            window.location.href='/elephant'
+        }
+    
+    script. 
+        function deleteOnid()
+        {
+            console.log("Starting delete")
+            fetch(actionid, {
+                method: 'DELETE'
+            }).then((resp) => {
+                return resp.json();
+            }).then((body) => {
+                alert("Delete succeeded")
+                window.location.href='/elephant'
+            }).catch((error) => {
+                alert("Delete failed" + error)
+            });
+        }
