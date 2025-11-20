@@ -6,9 +6,22 @@ block content
   - let items = results
   - console.log(items)
 
-  each item in items
-    div.container-fluid
-      div.row
-        div.col-sm-2 #{item.elephant_name}
-        div.col-sm-2 #{item.elephant_population}
-        div.col-sm-2 #{item.elephant_avg_weight}
+    //  each item in items
+    //    div.container-fluid
+    //      div.row
+    //        div.col-sm-2 #{item.elephant_name}
+    //        div.col-sm-2 #{item.elephant_population}
+    //        div.col-sm-2 #{item.elephant_avg_weight} //
+
+  div.container-fluid
+    div.row 
+      each item in items 
+        - let destination = `dispatch(\"/elephant/update?id=${item._id}\")`
+        div(class="row-sm-2", class="m-1") The #{item.elephant_name} has a population of around #{item.elephant_population} and weigh around #{item.elephant_avg_weight}
+          button.btn(class="btn-primary m-1", onclick=destination) Update 
+    
+    script.
+      function dispatch(path)
+      {
+        window.location.href=path
+      }
