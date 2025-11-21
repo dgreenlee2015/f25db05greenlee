@@ -1,22 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Dustin Greenlee's page
 
-  button(type="button", class="btn btn-primary" onClick="faster()") Sample Button
+  if(!user)
+    a(href="/login") Login 
 
-  div(id="faster") add in extra
+    br
 
-  script. 
-    let value = 1
-    let amt = 2
-    let answer = document.getElementById("faster")
+    a(href="/register") Register 
+  if(user)
+    p You are currently logged in as #{user.username}
+    a(href="/elephant") Take me to elephants 
 
-    function faster()
-    {
-      amt = amt * 2
-      value = amt + value
-      console.log("Faster " + value + " times " + amt)
-      answer.innerHTML = "Faster " + value + " times " + amt
-    }
+    br
+
+    a(href="/logout") Logout 
