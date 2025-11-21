@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const elephantSchema = mongoose.Schema({
-    elephant_name: String,
-    elephant_population: String,
+    elephant_name: {type: String, match: /^[A-Za-z ]*$/},
+    elephant_population: {type: String, maxlength: 11, required: true},
     elephant_avg_weight: String,
 })
 

@@ -12,14 +12,22 @@ block content
     //        div.col-sm-2 #{item.elephant_name}
     //        div.col-sm-2 #{item.elephant_population}
     //        div.col-sm-2 #{item.elephant_avg_weight} //
+  
+  div.container
+    -let createDestination = `dispatch(\"/elephant/create\")`
+    button.btn(class="btn-primary m-1", onclick=createDestination) Add an Elephant
 
   div.container-fluid
     div.row 
       each item in items 
         - let destination = `dispatch(\"/elephant/update?id=${item._id}\")`
+        - let detailDestination = `dispatch(\"/elephant/detail?id=${item._id}\")`
+        - let deleteDestination = `dispatch(\"/elephant/delete?id=${item._id}\")`
         div(class="row-sm-2", class="m-1") The #{item.elephant_name} has a population of around #{item.elephant_population} and weigh around #{item.elephant_avg_weight}
-          button.btn(class="btn-primary m-1", onclick=destination) Update 
-    
+          button.btn(class="btn-primary m-1", onclick=detailDestination) Details
+          button.btn(class="btn-primary m-1", onclick=destination) Update
+          button.btn(class="btn-danger m-1", onclick=deleteDestination) Delete 
+
     script.
       function dispatch(path)
       {
